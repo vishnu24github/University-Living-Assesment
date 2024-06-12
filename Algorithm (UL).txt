@@ -1,0 +1,45 @@
+1. Import required libraries:
+    - import whisper
+    - import pyaudio
+    - import numpy as np
+
+2. Load the Whisper model:
+    - model = whisper.load_model("base")
+
+3. Configure audio parameters:
+    - FORMAT = pyaudio.paInt16
+    - CHANNELS = 1
+    - RATE = 16000
+    - CHUNK = 1024
+
+4. Initialize PyAudio:
+    - audio = pyaudio.PyAudio()
+
+5. Open the audio stream:
+    - stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
+
+6. Print "Listening..."
+
+7. Define the transcribe_audio function:
+    Function transcribe_audio(audio_data):
+        - Convert audio_data to numpy array of int16
+        - Normalize audio_data
+        - Pad or trim audio segment to fit model input requirements
+        - Compute log mel spectrogram
+        - Create decoding options
+        - Decode spectrogram to text using model
+        - Return transcribed text
+
+8. Capture and process audio in real-time:
+    - try:
+        - while True:
+            - Read audio_data from stream
+            - Call transcribe_audio(audio_data)
+            - Print transcribed text
+    - except KeyboardInterrupt:
+        - Print "Stopping..."
+
+9. Clean up:
+    - finally:
+        - Stop and close the audio stream
+        - Terminate PyAudio instance
